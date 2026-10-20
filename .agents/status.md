@@ -297,7 +297,7 @@ Unranked: take a fresh profile before choosing one. Use [perf.md](perf.md) for e
   Under `**` any symlink means no proof at all. The proof's own walk (`record`) reads the same
   folders in a fraction of the glob's time; answering from it instead needs the glob's
   matching rules, and `implied` already checks the two agree. Measure with `bench/ab.sh
-relock` on a workspace project, and the no-op with a folder toggled under `packages/`
+  relock` on a workspace project, and the no-op with a folder toggled under `packages/`
   before each run; the `monorepo` fixture has no sources to walk.
 - On a warm walk the registry threads are still the bound on a large workspace, about 85%
   busy: parsing the manifests a pick reads, the head of each kept document (its index is
