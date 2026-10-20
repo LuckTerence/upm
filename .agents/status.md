@@ -16,7 +16,8 @@ compatibility. Keep this page about open work, not completed implementation step
   retention policy and a test that pauses an install at the deletion race.
   Start at `src/gc.ts` and `test/gc.test.ts`.
 - **Exec projects are never reclaimed:** every set of versions `upm exec` runs keeps a
-  project under the root's `node_modules/.upm/.exec`, or `~/.upm/exec` outside a project, and
+  project under the root's `node_modules/.upm/.exec`, or the cache directory's `exec` outside
+  a project, and
   `prune` knows nothing of them. The first go only with their `node_modules`; the second
   never. A tag that moves often (`upm publish` runs npm's `latest`) leaves one per version.
   Needs a retention rule (last use, count) and a prune test that keeps a running command's
@@ -80,7 +81,7 @@ compatibility. Keep this page about open work, not completed implementation step
 - **Symlinked workspace:** when a workspace directory is itself a symlink, its dep links
   are spelled relative to the path linked through, not where they sit, so on Linux and
   macOS they dangle. The test pins that spelling. Start at `linkTop` in `src/link.ts`.
-- **Compile cache is never reclaimed:** the bin's V8 cache in `~/.upm/compile-cache` gains
+- **Compile cache is never reclaimed:** the bin's V8 cache in `compile-cache` (upm's cache directory) gains
   entries for every new build and Node version, and nothing removes old ones. Needs a
   retention rule and a place to apply it, `prune` or the bin's start. Start at `src/upm.ts`.
 - **Kept registry documents are never reclaimed:** the store's `metadata` directory keeps

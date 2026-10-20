@@ -185,8 +185,9 @@ export interface RegistryAccess {
 
 export interface StoreAccess {
   /**
-   * Content-addressed store directory. Default: `UPM_STORE`, then `~/.upm/store`, or
-   * `.upm-store` on the project's mount when `~/.upm/store` cannot hardlink into it.
+   * Content-addressed store directory. Default: `UPM_STORE`, then `store` in upm's data
+   * directory (`$XDG_DATA_HOME/upm`, `~/.local/share/upm` or `~/.upm`), or `.upm-store` on the project's mount
+   * when that store cannot hardlink into it.
    */
   store?: string;
   /** Shared storage behind the store. */
@@ -1481,7 +1482,7 @@ async function execProject(
   ctx.root = dir;
   ctx.found = undefined;
   ctx.inside = undefined;
-  // `~/.upm/exec` may be on another mount than the project.
+  // The cache directory's `exec` may be on another mount than the project.
   ctx.store = undefined;
   return { dir, specs: sorted.map(([name, range]) => `${name}@${range}`) };
 }
