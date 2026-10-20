@@ -2340,7 +2340,7 @@ describe("a tarball is the package it is installed as", () => {
     const store = createStore({ dir: base.store! });
     const at = store.indexPath(p);
     const fresh = await readFile(at, "utf8");
-    const { aliases, ...older } = JSON.parse(fresh);
+    const { aliases: _, ...older } = JSON.parse(fresh);
     const blob = store.blobPath(older.files.find((file: any) => file.path === "package.json"));
     const reads = () => spy.mock.calls.filter(([path]) => path === blob).length;
     const spy = vi.spyOn(builtin.fs, "readFileSync");
