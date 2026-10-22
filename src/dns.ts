@@ -263,8 +263,10 @@ function isDefault(dispatcher: unknown): boolean {
   }
   const d = dispatcher as Record<symbol, Record<string, unknown>>;
   const opt = d[Object.getOwnPropertySymbols(d).find((s) => s.description === "options")!];
+  // undici 6 leaves connect, tls and interceptors unset; undici 7 adds maxOrigins: Infinity.
   return (
-    opt?.maxOrigins === Infinity && opt?.connect === undefined && Object.keys(opt).length === 2
+    !!opt &&
+    Object.entries(opt).every(([k, v]) => v === undefined || (k === "maxOrigins" && v === Infinity))
   );
 }
 
